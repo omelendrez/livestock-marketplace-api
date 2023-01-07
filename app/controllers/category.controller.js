@@ -25,7 +25,7 @@ exports.create = (req, res) => {
   });
 };
 
-// Retrieve all categorys from the database (with condition).
+// Retrieve all categories from the database (with condition).
 exports.findAll = (req, res) => {
   const name = req.query.name;
 
@@ -101,14 +101,14 @@ exports.delete = (req, res) => {
   });
 };
 
-// Delete all categorys from the database.
+// Delete all categories from the database.
 exports.deleteAll = (req, res) => {
   Category.removeAll((err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all categorys."
+          err.message || "Some error occurred while removing all categories."
       });
-    else res.send({ message: `All Categorys were deleted successfully!` });
+    else res.send({ message: `All categories were deleted successfully!` });
   });
 };
