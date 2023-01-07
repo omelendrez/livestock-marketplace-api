@@ -198,6 +198,12 @@ INSERT INTO `users` VALUES (1,'mike@gmail.com','123', 'Michael','Ogbona','081777
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
+LOCK TABLES `categories` WRITE;
+/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (1,'Fish'),(2,'Chicken'),(3,'Goat'),(4,'Cow');
+/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+UNLOCK TABLES;
+
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
 INSERT INTO `products` VALUES (1,'Breeders','Small fishes',1,10,10,1),(2,'Broiler','Big Broiler',2,30,4000,1),(3,'Ram','Big Ram',3,5,75000,1),(4,'Bull','Bull',4,60,250000,1),(5,'Old Layer','Old layer',2,100,4500,2),(6,'Native Goat','Native Goat',3,60,60000,2);

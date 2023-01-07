@@ -2,10 +2,6 @@ const sql = require("./db.js");
 
 // constructor
 const User = function (user) {
-  this.title = user.title;
-  this.description = user.description;
-  this.published = user.published;
-
   this.email = user.email
   this.password = user.password
   this.first_name = user.first_name
@@ -24,7 +20,7 @@ User.create = (newUser, result) => {
       return;
     }
 
-    console.log("created user: ", { id: res.insertId, ...newUser });
+    // console.log("created user: ", { id: res.insertId, ...newUser });
     result(null, { id: res.insertId, ...newUser });
   });
 };
@@ -38,7 +34,7 @@ User.findById = (id, result) => {
     }
 
     if (res.length) {
-      console.log("found user: ", res[0]);
+      // console.log("found user: ", res[0]);
       result(null, res[0]);
       return;
     }
@@ -62,15 +58,15 @@ User.getAll = (title, result) => {
       return;
     }
 
-    console.log("users: ", res);
+    // console.log("users: ", res);
     result(null, res);
   });
 };
 
 User.updateById = (id, user, result) => {
   sql.query(
-    "UPDATE users SET title = ?, description = ?, published = ? WHERE id = ?",
-    [user.title, user.description, user.published, id],
+    "UPDATE users SET first_name = ?, last_name = ?, phone = ?, profile_id = ?, organization_id = ?, user_status_id = ? WHERE id = ?",
+    [user.first_name, user.last_name, user.phone, user.profile_id, user.organization_id, user.user_status_id, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -84,7 +80,7 @@ User.updateById = (id, user, result) => {
         return;
       }
 
-      console.log("updated user: ", { id: id, ...user });
+      // console.log("updated user: ", { id: id, ...user });
       result(null, { id: id, ...user });
     }
   );
@@ -104,7 +100,7 @@ User.remove = (id, result) => {
       return;
     }
 
-    console.log("deleted user with id: ", id);
+    // console.log("deleted user with id: ", id);
     result(null, res);
   });
 };
@@ -117,7 +113,7 @@ User.removeAll = result => {
       return;
     }
 
-    console.log(`deleted ${res.affectedRows} users`);
+    // console.log(`deleted ${res.affectedRows} users`);
     result(null, res);
   });
 };

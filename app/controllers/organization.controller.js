@@ -1,6 +1,6 @@
-const User = require("../models/user.model");
+const Organization = require("../models/organization.model");
 
-// Create and Save a new user
+// Create and Save a new organization
 exports.create = (req, res) => {
   // Validate request
   if (!req.body) {
@@ -9,29 +9,29 @@ exports.create = (req, res) => {
     });
   }
 
-  // Create a User
-  const tutorial = new User({
+  // Create a Organization
+  const tutorial = new Organization({
     title: req.body.title,
     description: req.body.description,
     published: req.body.published || false
   });
 
-  // Save User in the database
-  User.create(tutorial, (err, data) => {
+  // Save Organization in the database
+  Organization.create(tutorial, (err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the User."
+          err.message || "Some error occurred while creating the Organization."
       });
     else res.send(data);
   });
 };
 
-// Retrieve all users from the database (with condition).
+// Retrieve all organizations from the database (with condition).
 exports.findAll = (req, res) => {
   const title = req.query.title;
 
-  User.getAll(title, (err, data) => {
+  Organization.getAll(title, (err, data) => {
     if (err)
       res.status(500).send({
         message:
@@ -41,24 +41,24 @@ exports.findAll = (req, res) => {
   });
 };
 
-// Find a single user with a id
+// Find a single organization with a id
 exports.findOne = (req, res) => {
-  User.findById(req.params.id, (err, data) => {
+  Organization.findById(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found User with id ${req.params.id}.`
+          message: `Not found Organization with id ${req.params.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Error retrieving User with id " + req.params.id
+          message: "Error retrieving Organization with id " + req.params.id
         });
       }
     } else res.send(data);
   });
 };
 
-// Update a user identified by the id in the request
+// Update a organization identified by the id in the request
 exports.update = (req, res) => {
   // Validate Request
   if (!req.body) {
@@ -69,18 +69,18 @@ exports.update = (req, res) => {
 
   // console.log(req.body);
 
-  User.updateById(
+  Organization.updateById(
     req.params.id,
-    new User(req.body),
+    new Organization(req.body),
     (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Not found User with id ${req.params.id}.`
+            message: `Not found Organization with id ${req.params.id}.`
           });
         } else {
           res.status(500).send({
-            message: "Error updating User with id " + req.params.id
+            message: "Error updating Organization with id " + req.params.id
           });
         }
       } else res.send(data);
@@ -88,31 +88,31 @@ exports.update = (req, res) => {
   );
 };
 
-// Delete a user with the specified id in the request
+// Delete a organization with the specified id in the request
 exports.delete = (req, res) => {
-  User.remove(req.params.id, (err, data) => {
+  Organization.remove(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found User with id ${req.params.id}.`
+          message: `Not found Organization with id ${req.params.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Could not delete User with id " + req.params.id
+          message: "Could not delete Organization with id " + req.params.id
         });
       }
-    } else res.send({ message: `User was deleted successfully!` });
+    } else res.send({ message: `Organization was deleted successfully!` });
   });
 };
 
-// Delete all users from the database.
+// Delete all organizations from the database.
 exports.deleteAll = (req, res) => {
-  User.removeAll((err, data) => {
+  Organization.removeAll((err, data) => {
     if (err)
       res.status(500).send({
         message:
           err.message || "Some error occurred while removing all tutorials."
       });
-    else res.send({ message: `All Users were deleted successfully!` });
+    else res.send({ message: `All Organizations were deleted successfully!` });
   });
 };
