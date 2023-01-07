@@ -13,7 +13,7 @@ USE `livestock-market`;
 DROP TABLE IF EXISTS `profiles`;
 
 CREATE TABLE `profiles` (
-    `id` INT NOT NULL AUTO_INCREMENT,
+    `id` tinyint NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
     `status_id` TINYINT DEFAULT '1',
     PRIMARY KEY (`id`)
@@ -45,7 +45,7 @@ CREATE TABLE `users` (
 DROP TABLE IF EXISTS `organization_status`;
 
 CREATE TABLE `organization_status` (
-    `id` INT NOT NULL AUTO_INCREMENT,
+    `id` tinyint NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`)
 )  ENGINE=INNODB AUTO_INCREMENT=74 DEFAULT CHARSET=UTF8MB4;
@@ -73,7 +73,7 @@ CREATE TABLE `categories` (
 DROP TABLE IF EXISTS `products`;
 
 CREATE TABLE `products` (
-    `id` SMALLINT NOT NULL AUTO_INCREMENT,
+    `id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
     `description` VARCHAR(255),
     `category_id` SMALLINT,
@@ -86,7 +86,7 @@ CREATE TABLE `products` (
 DROP TABLE IF EXISTS `order_status`;
 
 CREATE TABLE `order_status` (
-    `id` SMALLINT NOT NULL AUTO_INCREMENT,
+    `id` tinyint NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255),
     `status_message` VARCHAR(255),
     PRIMARY KEY (`id`)
@@ -150,8 +150,8 @@ DROP TABLE IF EXISTS `ratings`;
 
 CREATE TABLE `ratings` (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `order_id` INT,
-    `user_id` MEDIUMINT,
+    `order_id` INT NOT NULL,
+    `user_id` MEDIUMINT NOT NULL,
     `rating` TINYINT,
     PRIMARY KEY (`id`)
 )  ENGINE=INNODB AUTO_INCREMENT=74 DEFAULT CHARSET=UTF8MB4;
