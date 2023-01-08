@@ -1,7 +1,7 @@
 module.exports = app => {
   const userStatus = require("../controllers/user_status.controller.js");
 
-  var router = require("express").Router();
+  const router = require("express").Router();
 
   // Create a new userStatus
   router.post("/", userStatus.create);

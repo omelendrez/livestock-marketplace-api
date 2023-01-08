@@ -1,7 +1,7 @@
 module.exports = app => {
   const rejectionReasons = require("../controllers/rejection_reasons.controller.js");
 
-  var router = require("express").Router();
+  const router = require("express").Router();
 
   // Create a new rejectionReasons
   router.post("/", rejectionReasons.create);

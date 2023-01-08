@@ -1,7 +1,7 @@
 module.exports = app => {
   const profile = require("../controllers/profile.controller.js");
 
-  var router = require("express").Router();
+  const router = require("express").Router();
 
   // Create a new profile
   router.post("/", profile.create);

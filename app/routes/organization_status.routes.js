@@ -1,7 +1,7 @@
 module.exports = app => {
   const organizationStatus = require("../controllers/organization_status.controller.js");
 
-  var router = require("express").Router();
+  const router = require("express").Router();
 
   // Create a new organizationStatus
   router.post("/", organizationStatus.create);

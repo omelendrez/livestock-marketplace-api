@@ -1,7 +1,7 @@
 module.exports = app => {
   const organization = require("../controllers/organization.controller.js");
 
-  var router = require("express").Router();
+  const router = require("express").Router();
 
   // Create a new organization
   router.post("/", organization.create);

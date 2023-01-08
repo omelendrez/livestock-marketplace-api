@@ -1,7 +1,7 @@
 module.exports = app => {
   const rejection = require("../controllers/rejection.controller.js");
 
-  var router = require("express").Router();
+  const router = require("express").Router();
 
   // Create a new rejection
   router.post("/", rejection.create);
