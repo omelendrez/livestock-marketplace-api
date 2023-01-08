@@ -1,5 +1,6 @@
 const sql = require("./db.js");
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 const toWeb = require('../helpers/utils')
 // constructor
 const User = function (user) {
@@ -46,7 +47,7 @@ User.findById = (id, result) => {
 };
 
 User.login = (params, result) => {
-  sql.query(`SELECT * FROM users WHERE email = '${params.email}'`, (err, res) => {
+  sql.query(`SELECT * FROM users WHERE email = '${params.email}'`, async (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -55,6 +56,13 @@ User.login = (params, result) => {
 
     if (res.length) {
       // console.log("found user: ", res[0]);
+      const ok = await bcrypt.compare(params.password, res[0].password)
+
+      if (!ok) {
+        console.log("error: user or password incorrect", err);
+        result({ kind: "wrong_password" }, null);
+        return;
+      }
 
       const user = toWeb(res[0])
       const token = jwt.sign({
@@ -93,6 +101,51 @@ User.updateById = (id, user, result) => {
   sql.query(
     "UPDATE users SET first_name = ?, last_name = ?, phone = ?, profile_id = ?, organization_id = ?, user_status_id = ? WHERE id = ?",
     [user.first_name, user.last_name, user.phone, user.profile_id, user.organization_id, user.user_status_id, id],
+    (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+
+      if (res.affectedRows == 0) {
+        // not found User with the id
+        result({ kind: "not_found" }, null);
+        return;
+      }
+
+      // console.log("updated user: ", { id: id, ...user });
+      result(null, { id: id, ...user });
+    }
+  );
+};
+
+User.chgPwd = async (id, user, result) => {
+  sql.query(`SELECT * FROM users WHERE id = '${id}'`, async (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    if (res.length == 0) {
+      // not found User with the id
+      result({ kind: "not_found" }, null);
+      return;
+    }
+
+    if (res[0].password !== user.prevPass) {
+      // not found User with the id
+      result({ kind: "wrong_prev_password" }, null);
+      return;
+    }
+
+  })
+
+  const password = await bcrypt.hash(user.password, 10)
+  sql.query(
+    "UPDATE users SET password = ? WHERE id = ?",
+    [password, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);

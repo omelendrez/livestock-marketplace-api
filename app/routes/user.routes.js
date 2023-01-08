@@ -19,6 +19,9 @@ module.exports = app => {
   // Update a user with id
   router.put("/:id", secure, user.update);
 
+  // Update a user with id
+  router.put("/:id/chgpwd", secure, user.chgPwd);
+
   // Delete a user with id
   router.delete("/:id", secure, user.delete);
 

@@ -194,7 +194,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'mike@gmail.com','123', 'Michael','Ogbona','0817778999',2,1,2),(2,'louis@hotmail.com','123', 'Louis','Friday','0494857576',2,1,2),(3,'joseph@yahoo.com','123', 'Jo','Kenneth','0894848483',4,2,2),(4,'ndubuisi@mail.com','123', 'Ndubuisi','','0949494949',1,3,2),(5,'mr.buyer@yahoo.com','123', '','','0756565642',3,4,2);
+INSERT INTO `users` VALUES (1,'mike@gmail.com','$2b$10$ekPBBIPW4HRAHM02Z4AxBuVMHDtKK6tenRleeUyiNhQTbIVwn3HIW', 'Michael','Ogbona','0817778999',2,1,2),(2,'louis@hotmail.com','$2b$10$UJnTsptmtoLCwJKEpTVDEexBcTBdkNnRT7WHKSl9CZc6.Jxi4I5Qu', 'Louis','Friday','0494857576',2,1,2),(3,'joseph@yahoo.com','$2b$10$oXmX.YyRZn3MSWMsK.M6UOyv/154KfCJ3SMZCp.s0vOcnr8MU0Xaa', 'Jo','Kenneth','0894848483',4,2,2),(4,'ndubuisi@mail.com','$2b$10$d84vbHeXXkExkffDajvKr.aJZc.lH7cgUQXRnAm/d2vOtvNmLXCUi', 'Ndubuisi','','0949494949',1,3,2),(5,'mr.buyer@yahoo.com','$2b$10$hR2CE.dm4J8XghFEC4dvT.p2GsjMq17Ry7y9/2Y9Vz6GSbcJLWbui', '','','0756565642',3,4,2);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 

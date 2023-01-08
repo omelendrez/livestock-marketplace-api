@@ -93,6 +93,34 @@ exports.update = (req, res) => {
   );
 };
 
+exports.chgPwd = (req, res) => {
+  User.chgPwd(req.params.id, req.body,
+    (err, data) => {
+      if (err) {
+        console.log(err)
+        switch (err.kind) {
+          case "not_found":
+            res.status(404).send({
+              message: `Not found User with id ${req.params.id}.`
+            });
+            break
+          case "wrong_prev_password":
+            res.status(400).send({
+              message: `Previous password not matching.`
+            });
+            break
+          default:
+            res.status(500).send({
+              message: "Error updating User with id " + req.params.id
+            });
+            break
+        }
+      } else res.send({
+        message: `Password changed successfuly.`
+      });
+    })
+}
+
 // Delete a user with the specified id in the request
 exports.delete = (req, res) => {
   User.remove(req.params.id, (err, data) => {
@@ -126,14 +154,22 @@ exports.deleteAll = (req, res) => {
 exports.login = (req, res) => {
   User.login(req.body, (err, data) => {
     if (err) {
-      if (err.kind === "not_found") {
-        res.status(404).send({
-          message: `Not found User with id ${req.params.id}.`
-        });
-      } else {
-        res.status(500).send({
-          message: "Error retrieving User with id " + req.params.id
-        });
+      switch (err.kind) {
+        default:
+          res.status(500).send({
+            message: "Error retrieving User with id " + req.params.id
+          });
+          break;
+        case "not_found":
+          res.status(404).send({
+            message: `Not found User with id ${req.params.id}.`
+          });
+          break;
+        case "wrong_password":
+          res.status(401).send({
+            message: `Email or password incorrect.`
+          });
+          break;
       }
     } else res.send(data);
   });
