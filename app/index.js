@@ -21,11 +21,20 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to livestock marketplace application." });
 });
 
-require("./routes/user.routes.js")(app);
-require("./routes/profile.routes.js")(app);
-require("./routes/organization.routes.js")(app);
 require("./routes/category.routes.js")(app);
+require("./routes/order_details.routes.js")(app);
+require("./routes/order_status.routes.js")(app);
+require("./routes/order_tracking.routes.js")(app);
+require("./routes/order.routes.js")(app);
+require("./routes/organization_status.routes.js")(app);
+require("./routes/organization.routes.js")(app);
 require("./routes/product.routes.js")(app);
+require("./routes/profile.routes.js")(app);
+require("./routes/rejection_reasons.routes.js")(app);
+require("./routes/rejection.routes.js")(app);
+require("./routes/user_status.routes.js")(app);
+require("./routes/user.routes.js")(app);
+
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

@@ -10,14 +10,16 @@ exports.create = (req, res) => {
   }
 
   // Create a Organization
-  const tutorial = new Organization({
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published || false
+  const organization = new Organization({
+    email: req.body.email,
+    name: req.body.name,
+    phone: req.body.phone,
+    profile_id: req.body.profile_id,
+    organization_status_id: req.body.organization_status_id
   });
 
   // Save Organization in the database
-  Organization.create(tutorial, (err, data) => {
+  Organization.create(organization, (err, data) => {
     if (err)
       res.status(500).send({
         message:
@@ -35,7 +37,7 @@ exports.findAll = (req, res) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while retrieving Organizations."
       });
     else res.send(data);
   });
@@ -111,7 +113,7 @@ exports.deleteAll = (req, res) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all tutorials."
+          err.message || "Some error occurred while removing all Organizations."
       });
     else res.send({ message: `All Organizations were deleted successfully!` });
   });

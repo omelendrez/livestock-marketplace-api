@@ -11,7 +11,12 @@ exports.create = (req, res) => {
 
   // Create a Product
   const product = new Product({
-    name: req.body.name
+    name: req.body.name,
+    description: req.body.description,
+    category_id: req.body.category_id,
+    stock: req.body.stock,
+    unit_price: req.body.unit_price,
+    seller_id: req.body.seller_id
   });
 
   // Save Product in the database
@@ -33,7 +38,7 @@ exports.findAll = (req, res) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving categories."
+          err.message || "Some error occurred while retrieving Products."
       });
     else res.send(data);
   });

@@ -21,5 +21,5 @@ module.exports = app => {
   // Delete all category
   router.delete("/", category.deleteAll);
 
-  app.use('/api/category', router);
+  app.use('/api/categories', router);
 };

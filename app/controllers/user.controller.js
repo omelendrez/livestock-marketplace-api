@@ -10,14 +10,19 @@ exports.create = (req, res) => {
   }
 
   // Create a User
-  const tutorial = new User({
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published || false
+  const user = new User({
+    email: req.body.email,
+    password: req.body.password,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    phone: req.body.phone,
+    profile_id: req.body.profile_id,
+    organization_id: req.body.organization_id,
+    user_status_id: req.body.user_status_id
   });
 
   // Save User in the database
-  User.create(tutorial, (err, data) => {
+  User.create(user, (err, data) => {
     if (err)
       res.status(500).send({
         message:
@@ -35,7 +40,7 @@ exports.findAll = (req, res) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while retrieving Users."
       });
     else res.send(data);
   });
@@ -111,7 +116,7 @@ exports.deleteAll = (req, res) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all tutorials."
+          err.message || "Some error occurred while removing all Users."
       });
     else res.send({ message: `All Users were deleted successfully!` });
   });
