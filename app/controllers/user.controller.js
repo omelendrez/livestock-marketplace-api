@@ -94,11 +94,17 @@ exports.update = (req, res) => {
 };
 
 exports.chgPwd = (req, res) => {
-  User.chgPwd(req.params.id, req.body,
+  User.chgPwd(
+    req.params.id,
+    req.body,
     (err, data) => {
       if (err) {
-        console.log(err)
         switch (err.kind) {
+          default:
+            res.status(500).send({
+              message: "Error updating User with id " + req.params.id
+            });
+            break
           case "not_found":
             res.status(404).send({
               message: `Not found User with id ${req.params.id}.`
@@ -109,15 +115,8 @@ exports.chgPwd = (req, res) => {
               message: `Previous password not matching.`
             });
             break
-          default:
-            res.status(500).send({
-              message: "Error updating User with id " + req.params.id
-            });
-            break
         }
-      } else res.send({
-        message: `Password changed successfuly.`
-      });
+      } else res.send({ message: `Password changed successfuly.` });
     })
 }
 

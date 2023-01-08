@@ -134,35 +134,37 @@ User.chgPwd = async (id, user, result) => {
       return;
     }
 
-    if (res[0].password !== user.prevPass) {
+    const ok = await bcrypt.compare(user.prevPass, res[0].password)
+
+    if (!ok) {
       // not found User with the id
       result({ kind: "wrong_prev_password" }, null);
       return;
     }
 
+    const password = await bcrypt.hash(user.password, 10)
+
+    sql.query(
+      "UPDATE users SET password = ? WHERE id = ?",
+      [password, id],
+      (err, res) => {
+        if (err) {
+          console.log("error: ", err);
+          result(null, err);
+          return;
+        }
+
+        if (res.affectedRows == 0) {
+          // not found User with the id
+          result({ kind: "not_found" }, null);
+          return;
+        }
+
+        // console.log("updated user: ", { id: id, ...user });
+        result(null, { id });
+      }
+    );
   })
-
-  const password = await bcrypt.hash(user.password, 10)
-  sql.query(
-    "UPDATE users SET password = ? WHERE id = ?",
-    [password, id],
-    (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(null, err);
-        return;
-      }
-
-      if (res.affectedRows == 0) {
-        // not found User with the id
-        result({ kind: "not_found" }, null);
-        return;
-      }
-
-      // console.log("updated user: ", { id: id, ...user });
-      result(null, { id: id, ...user });
-    }
-  );
 };
 
 User.remove = (id, result) => {
