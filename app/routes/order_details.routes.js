@@ -1,25 +1,29 @@
+const auth = require('../middleware/auth')
+
+const secure = auth.validateToken
+
 module.exports = app => {
   const orderDetails = require("../controllers/order_details.controller.js");
 
   const router = require("express").Router();
 
   // Create a new orderDetails
-  router.post("/", orderDetails.create);
+  router.post("/", secure, orderDetails.create);
 
   // Retrieve all orderDetails
-  router.get("/", orderDetails.findAll);
+  router.get("/", secure, orderDetails.findAll);
 
   // Retrieve a single orderDetails with id
-  router.get("/:id", orderDetails.findOne);
+  router.get("/:id", secure, orderDetails.findOne);
 
   // Update a orderDetails with id
-  router.put("/:id", orderDetails.update);
+  router.put("/:id", secure, orderDetails.update);
 
   // Delete a orderDetails with id
-  router.delete("/:id", orderDetails.delete);
+  router.delete("/:id", secure, orderDetails.delete);
 
   // Delete all orderDetails
-  router.delete("/", orderDetails.deleteAll);
+  router.delete("/", secure, orderDetails.deleteAll);
 
   app.use('/api/order-details', router);
 };

@@ -1,5 +1,6 @@
 const sql = require("./db.js");
-
+const jwt = require('jsonwebtoken')
+const toWeb = require('../helpers/utils')
 // constructor
 const User = function (user) {
   this.email = user.email
@@ -43,6 +44,31 @@ User.findById = (id, result) => {
     result({ kind: "not_found" }, null);
   });
 };
+
+User.login = (params, result) => {
+  sql.query(`SELECT * FROM users WHERE email = '${params.email}'`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    if (res.length) {
+      // console.log("found user: ", res[0]);
+
+      const user = toWeb(res[0])
+      const token = jwt.sign({
+        data: user
+      }, process.env.JWT_SECRET, { expiresIn: '1d' }, { algorithm: 'HS256' });
+
+      result(null, { ...user, token });
+      return;
+    }
+
+    // not found User with the id
+    result({ kind: "not_found" }, null);
+  });
+}
 
 User.getAll = (title, result) => {
   let query = "SELECT * FROM users";

@@ -1,0 +1,13 @@
+### Login
+POST http://localhost:3000/api/users/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "mike@gmail.com",
+    "password": "12345"
+}
+
+### Categories
+GET http://localhost:3000/api/categories HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoxLCJlbWFpbCI6Im1pa2VAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6Ik1pY2hhZWwiLCJsYXN0X25hbWUiOiJPZ2JvbmEiLCJwaG9uZSI6IjA4MTc3Nzg5OTkiLCJwcm9maWxlX2lkIjoyLCJvcmdhbml6YXRpb25faWQiOjEsInVzZXJfc3RhdHVzX2lkIjoyfSwiaWF0IjoxNjczMTkwMDIxLCJleHAiOjE2NzMyNzY0MjF9.ZMV9rF1xAHUcPlWJk9irAqnw4kV3R-P_dd2HmmpVywQ
+
