@@ -72,8 +72,6 @@ exports.update = (req, res) => {
     });
   }
 
-  // console.log(req.body);
-
   User.updateById(
     req.params.id,
     new User(req.body),
@@ -104,21 +102,21 @@ exports.chgPwd = (req, res) => {
             res.status(500).send({
               message: "Error updating User with id " + req.params.id
             });
-            break
+            break;
           case "not_found":
             res.status(404).send({
               message: `Not found User with id ${req.params.id}.`
             });
-            break
+            break;
           case "wrong_prev_password":
             res.status(400).send({
               message: `Previous password not matching.`
             });
-            break
+            break;
         }
       } else res.send({ message: `Password changed successfuly.` });
-    })
-}
+    });
+};
 
 // Delete a user with the specified id in the request
 exports.delete = (req, res) => {
@@ -172,4 +170,4 @@ exports.login = (req, res) => {
       }
     } else res.send(data);
   });
-}
+};

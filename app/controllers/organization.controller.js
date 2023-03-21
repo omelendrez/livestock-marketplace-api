@@ -69,8 +69,6 @@ exports.update = (req, res) => {
     });
   }
 
-  // console.log(req.body);
-
   Organization.updateById(
     req.params.id,
     new Organization(req.body),

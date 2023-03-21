@@ -1,4 +1,5 @@
-require('dotenv').config()
+require('dotenv').config();
+const { log } = require('./../helpers/log');
 const mysql = require("mysql");
 // Create a connection to the database
 const connection = mysql.createConnection({
@@ -11,7 +12,7 @@ const connection = mysql.createConnection({
 // open the MySQL connection
 connection.connect(error => {
   if (error) throw error;
-  console.log("Successfully connected to the database.");
+  log.info("Successfully connected to the database.");
 });
 
 module.exports = connection;
