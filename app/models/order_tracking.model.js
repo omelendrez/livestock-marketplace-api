@@ -1,22 +1,22 @@
+const { log } = require("../helpers/log.js");
 const sql = require("./db.js");
 
 // constructor
 const OrderTracking = function (orderTracking) {
-  this.order_id = orderTracking.order_id
-  this.order_status_id = orderTracking.order_status_id
-  this.user_id = orderTracking.user_id
-  this.date_time = orderTracking.date_time
+  this.order_id = orderTracking.order_id;
+  this.order_status_id = orderTracking.order_status_id;
+  this.user_id = orderTracking.user_id;
+  this.date_time = orderTracking.date_time;
 };
 
 OrderTracking.create = (newOrderTracking, result) => {
   sql.query("INSERT INTO order_tracking SET ?", newOrderTracking, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      log.error("error: ", err);
       result(err, null);
       return;
     }
 
-    // console.log("created orderTracking: ", { id: res.insertId, ...newOrderTracking });
     result(null, { id: res.insertId, ...newOrderTracking });
   });
 };
@@ -24,18 +24,16 @@ OrderTracking.create = (newOrderTracking, result) => {
 OrderTracking.findById = (id, result) => {
   sql.query(`SELECT * FROM order_tracking WHERE id = ${id}`, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      log.error("error: ", err);
       result(err, null);
       return;
     }
 
     if (res.length) {
-      // console.log("found orderTracking: ", res[0]);
       result(null, res[0]);
       return;
     }
 
-    // not found OrderTracking with the id
     result({ kind: "not_found" }, null);
   });
 };
@@ -45,12 +43,11 @@ OrderTracking.getAll = (title, result) => {
 
   sql.query(query, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      log.error("error: ", err);
       result(null, err);
       return;
     }
 
-    // console.log("order_tracking: ", res);
     result(null, res);
   });
 };
@@ -61,18 +58,16 @@ OrderTracking.updateById = (id, orderTracking, result) => {
     [orderTracking.order_id, orderTracking.user_id, orderTracking.date_time, id],
     (err, res) => {
       if (err) {
-        console.log("error: ", err);
+        log.error("error: ", err);
         result(null, err);
         return;
       }
 
       if (res.affectedRows == 0) {
-        // not found OrderTracking with the id
         result({ kind: "not_found" }, null);
         return;
       }
 
-      // console.log("updated orderTracking: ", { id: id, ...orderTracking });
       result(null, { id: id, ...orderTracking });
     }
   );
@@ -81,18 +76,16 @@ OrderTracking.updateById = (id, orderTracking, result) => {
 OrderTracking.remove = (id, result) => {
   sql.query("DELETE FROM order_tracking WHERE id = ?", id, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      log.error("error: ", err);
       result(null, err);
       return;
     }
 
     if (res.affectedRows == 0) {
-      // not found OrderTracking with the id
       result({ kind: "not_found" }, null);
       return;
     }
 
-    // console.log("deleted orderTracking with id: ", id);
     result(null, res);
   });
 };
@@ -100,12 +93,11 @@ OrderTracking.remove = (id, result) => {
 OrderTracking.removeAll = result => {
   sql.query("DELETE FROM order_tracking", (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      log.error("error: ", err);
       result(null, err);
       return;
     }
 
-    // console.log(`deleted ${res.affectedRows} order_tracking`);
     result(null, res);
   });
 };

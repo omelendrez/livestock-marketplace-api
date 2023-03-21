@@ -65,8 +65,6 @@ exports.update = (req, res) => {
     });
   }
 
-  // console.log(req.body);
-
   Profile.updateById(
     req.params.id,
     new Profile(req.body),

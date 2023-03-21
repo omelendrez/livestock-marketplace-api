@@ -1,20 +1,20 @@
+const { log } = require("../helpers/log.js");
 const sql = require("./db.js");
 
 // constructor
 const Rejection = function (rejection) {
-  this.order_id = rejection.order_id
-  this.rejected_reason_id = rejection.rejected_reason_id
+  this.order_id = rejection.order_id;
+  this.rejected_reason_id = rejection.rejected_reason_id;
 };
 
 Rejection.create = (newRejection, result) => {
   sql.query("INSERT INTO rejections SET ?", newRejection, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      log.error("error: ", err);
       result(err, null);
       return;
     }
 
-    // console.log("created rejection: ", { id: res.insertId, ...newRejection });
     result(null, { id: res.insertId, ...newRejection });
   });
 };
@@ -22,18 +22,16 @@ Rejection.create = (newRejection, result) => {
 Rejection.findById = (id, result) => {
   sql.query(`SELECT * FROM rejections WHERE id = ${id}`, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      log.error("error: ", err);
       result(err, null);
       return;
     }
 
     if (res.length) {
-      // console.log("found rejection: ", res[0]);
       result(null, res[0]);
       return;
     }
 
-    // not found Rejection with the id
     result({ kind: "not_found" }, null);
   });
 };
@@ -43,12 +41,11 @@ Rejection.getAll = (title, result) => {
 
   sql.query(query, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      log.error("error: ", err);
       result(null, err);
       return;
     }
 
-    // console.log("rejections: ", res);
     result(null, res);
   });
 };
@@ -59,18 +56,16 @@ Rejection.updateById = (id, rejection, result) => {
     [rejection.order_id, rejection.rejected_reason_id, id],
     (err, res) => {
       if (err) {
-        console.log("error: ", err);
+        log.error("error: ", err);
         result(null, err);
         return;
       }
 
       if (res.affectedRows == 0) {
-        // not found Rejection with the id
         result({ kind: "not_found" }, null);
         return;
       }
 
-      // console.log("updated rejection: ", { id: id, ...rejection });
       result(null, { id: id, ...rejection });
     }
   );
@@ -79,18 +74,16 @@ Rejection.updateById = (id, rejection, result) => {
 Rejection.remove = (id, result) => {
   sql.query("DELETE FROM rejections WHERE id = ?", id, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      log.error("error: ", err);
       result(null, err);
       return;
     }
 
     if (res.affectedRows == 0) {
-      // not found Rejection with the id
       result({ kind: "not_found" }, null);
       return;
     }
 
-    // console.log("deleted rejection with id: ", id);
     result(null, res);
   });
 };
@@ -98,12 +91,11 @@ Rejection.remove = (id, result) => {
 Rejection.removeAll = result => {
   sql.query("DELETE FROM rejections", (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      log.error("error: ", err);
       result(null, err);
       return;
     }
 
-    // console.log(`deleted ${res.affectedRows} rejections`);
     result(null, res);
   });
 };
